@@ -18,7 +18,7 @@ A simple Python project for loading configuration files.
 ### Installation
 1. Clone this repository:
    ```sh
-   git clone https://github.com/your-username/config-loader.git
+   git clone https://github.com/naoto-kawakami/config-loader.git
    cd config-loader
    ```
 
