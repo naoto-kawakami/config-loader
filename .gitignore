@@ -23,3 +23,6 @@ wheels/
 htmlcov/
 *.coverage
 *.lcov
+
+# Ruff
+.ruff_cache/
