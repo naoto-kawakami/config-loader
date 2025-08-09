@@ -1,0 +1,12 @@
+input_filepath: ~/dev/config-loader/data/input/john_doe.csv
+output_dir: ~/dev/config-loader/data/output
+name: John Doe
+age: 30
+is_student: true
+
+# Comments
+
+# Nested items
+nested:
+  key: value
+  another_key: another_value
