@@ -69,6 +69,7 @@ class PersonConfig(ConfigMixin, BaseModel):
 
     class Nested(BaseModel):
         """Nested configuration model."""
+
         key: str
         another_key: str
 
