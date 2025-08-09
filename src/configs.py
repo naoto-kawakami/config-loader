@@ -19,7 +19,7 @@ def _resolve_path(path: str) -> Path:
     return Path(path).expanduser().resolve()
 
 
-class ConfigMixin:
+class ConfigMixin(BaseModel):
     """Mixin class to provide configuration loading functionality."""
 
     @classmethod
@@ -64,10 +64,10 @@ class ConfigMixin:
         return data
 
 
-class PersonConfig(ConfigMixin, BaseModel):
+class PersonConfig(ConfigMixin):
     """Configuration model for a person with nested structures."""
 
-    class Nested(BaseModel):
+    class Nested(ConfigMixin):
         """Nested configuration model."""
 
         key: str
