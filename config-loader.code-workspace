@@ -9,5 +9,9 @@
 		"python.testing.pytestArgs": [
 			"tests"
 		],
+		"python.analysis.extraPaths": [
+			"./src"
+		],
+		"python.defaultInterpreterPath": "./.venv/bin/python"
 	}
 }
