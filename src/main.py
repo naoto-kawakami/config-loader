@@ -28,8 +28,8 @@ if __name__ == "__main__":
     # Assuming the YAML file is structured correctly.
     src_dir = Path(__file__).expanduser().resolve().parent
     project_dir = src_dir.parent
-    config_dir = project_dir / "config"
-    config_filepath = config_dir / "person-config.yaml"
+    configs_dir = project_dir / "configs"
+    config_filepath = configs_dir / "person-config.yaml"
     if not config_filepath.exists():
         raise FileNotFoundError(f"Configuration file not found: {config_filepath}")
 
