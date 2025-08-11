@@ -7,11 +7,11 @@ import yaml
 from pydantic import BaseModel, model_validator
 
 
-def _resolve_path(path: str) -> Path:
+def _resolve_path(path: str | Path) -> Path:
     """Resolve a given path string to an absolute Path object.
 
     Args:
-        path (str): Path string to resolve.
+        path (str | Path): Path to resolve.
 
     Returns:
         Path: An absolute Path object.
@@ -23,11 +23,11 @@ class ConfigMixin(BaseModel):
     """Mixin class to provide configuration loading functionality."""
 
     @classmethod
-    def from_yaml(cls, filepath_text: str):
+    def from_yaml(cls, filepath: str | Path):
         """Load configuration from a YAML file.
 
         Args:
-            filepath_text (str): Path to the YAML file.
+            filepath (str | Path): Path to the YAML file.
 
         Raises:
             FileNotFoundError: If the file does not exist.
@@ -35,7 +35,10 @@ class ConfigMixin(BaseModel):
         Returns:
             ConfigMixin: An instance of the class with data loaded from the YAML file.
         """
-        filepath = _resolve_path(filepath_text)
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+
+        filepath = _resolve_path(filepath)
         if not filepath.exists():
             raise FileNotFoundError(f"File does not exist: {filepath}")
 
@@ -59,7 +62,7 @@ class ConfigMixin(BaseModel):
             type_hints = get_type_hints(cls)
             for field_name, value in data.items():
                 field_type = type_hints.get(field_name)
-                if field_type == Path and value is not None:
+                if field_type is Path and value is not None:
                     data[field_name] = _resolve_path(value)
         return data
 
