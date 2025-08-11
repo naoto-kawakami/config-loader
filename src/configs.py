@@ -19,8 +19,8 @@ def _resolve_path(path: str | Path) -> Path:
     return Path(path).expanduser().resolve()
 
 
-class ConfigMixin(BaseModel):
-    """Mixin class to provide configuration loading functionality."""
+class YamlLoaderMixin(BaseModel):
+    """Mixin class to provide YAML loading functionality."""
 
     @classmethod
     def from_yaml(cls, filepath: str | Path):
@@ -47,6 +47,10 @@ class ConfigMixin(BaseModel):
 
         return cls(**data)
 
+
+class PathResolverMixin(BaseModel):
+    """Mixin class to resolve paths in configuration."""
+
     @model_validator(mode="before")
     @classmethod
     def validate_paths(cls, data: Any) -> Any:
@@ -65,6 +69,12 @@ class ConfigMixin(BaseModel):
                 if field_type is Path and value is not None:
                     data[field_name] = _resolve_path(value)
         return data
+
+
+class ConfigMixin(YamlLoaderMixin, PathResolverMixin):
+    """Base configuration model that combines YAML loading and path resolution."""
+
+    pass
 
 
 class PersonConfig(ConfigMixin):

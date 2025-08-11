@@ -1,7 +1,14 @@
-from .configs import ConfigMixin, PersonConfig
+from .configs import (
+    YamlLoaderMixin,
+    PathResolverMixin,
+    ConfigMixin,
+    PersonConfig,
+)
 
 
 __all__ = [
+    "YamlLoaderMixin",
+    "PathResolverMixin",
     "ConfigMixin",
     "PersonConfig",
 ]
