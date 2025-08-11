@@ -1,9 +1,9 @@
-
 # config-loader
 
 A simple Python project for loading configuration files.
 
 ## Features
+
 - Loads YAML configuration files
 - Easy to extend for other formats
 - Minimal dependencies
@@ -11,12 +11,14 @@ A simple Python project for loading configuration files.
 ## Getting Started
 
 ### Prerequisites
+
 - Python 3.13 (see `.python-version`)
 - [uv](https://github.com/astral-sh/uv) for dependency and environment management
 
-
 ### Installation
+
 1. Clone this repository:
+
    ```sh
    git clone https://github.com/naoto-kawakami/config-loader.git
    cd config-loader
@@ -33,7 +35,9 @@ A simple Python project for loading configuration files.
    ```
 
 ### Usage
+
 Run the main script:
+
 ```sh
 python src/main.py
 ```
@@ -41,12 +45,15 @@ python src/main.py
 You can modify the configuration in `config/person-config.yaml`.
 
 ## Development
+
 To install development dependencies:
+
 ```sh
 uv sync --group dev
 ```
 
 ## Project Structure
+
 ```
 config-loader/
 ├── .python-version
@@ -62,4 +69,5 @@ config-loader/
 ```
 
 ## License
+
 MIT
