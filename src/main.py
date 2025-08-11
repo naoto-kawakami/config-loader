@@ -1,6 +1,7 @@
 """This script demonstrates how to use the PersonConfig class to load a YAML configuration file."""
 
 from pathlib import Path
+from pprint import pprint
 
 from configs import ConfigMixin
 
@@ -33,4 +34,4 @@ if __name__ == "__main__":
         raise FileNotFoundError(f"Configuration file not found: {config_filepath}")
 
     person_config = PersonConfig.from_yaml(config_filepath)
-    print(person_config)
+    pprint(person_config.model_dump())
