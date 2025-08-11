@@ -2,7 +2,24 @@
 
 from pathlib import Path
 
-from configs import PersonConfig
+from configs import ConfigMixin
+
+
+class PersonConfig(ConfigMixin):
+    """Configuration model for a person with nested structures."""
+
+    class Nested(ConfigMixin):
+        """Nested configuration model."""
+
+        key: str
+        another_key: str
+
+    input_filepath: Path
+    output_dir: Path
+    name: str
+    age: int
+    is_student: bool
+    nested: Nested
 
 
 if __name__ == "__main__":

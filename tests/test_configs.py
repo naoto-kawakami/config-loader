@@ -2,72 +2,76 @@ from pathlib import Path
 
 import pytest
 
-from src.configs import PersonConfig, _resolve_path
+from src.configs import YamlLoaderMixin, PathResolverMixin
 
 
-@pytest.mark.parametrize(
-    "input_path,expected_name",
-    [
-        ("~/test_dir/file.txt", "file.txt"),
-        ("./test_configs.py", "test_configs.py"),
-    ],
-)
-def test_resolve_path_expands_user_and_resolves(
-    input_path: str,
-    expected_name: str,
-) -> None:
-    resolved = _resolve_path(input_path)
-    assert resolved.name == expected_name
-    assert resolved.is_absolute()
+class SampleConfig(YamlLoaderMixin):
+    """Sample configuration class for YamlLoaderMixin."""
+
+    name: str
+    age: int
+    is_student: bool
 
 
-@pytest.fixture
-def expected_person_data() -> dict:
-    return {
-        "name": "John Doe",
-        "age": 30,
-        "is_student": True,
-        "input_filepath_name": "john_doe.csv",
-        "nested": {
-            "key": "value",
-            "another_key": "another_value",
-        },
-    }
-
-
-@pytest.fixture
-def sample_yaml_content() -> str:
-    return """
-input_filepath: ~/dev/config-loader/data/input/john_doe.csv
-output_dir: ~/dev/config-loader/data/output
+def test_yaml_loader_mixin_from_yaml(tmp_path: Path) -> None:
+    """Test YamlLoaderMixin.from_yaml() method."""
+    yaml_content = """
 name: John Doe
 age: 30
 is_student: true
-nested:
-  key: value
-  another_key: another_value
 """
+    yaml_file = tmp_path / "test-config.yaml"
+    yaml_file.write_text(yaml_content)
+
+    config = SampleConfig.from_yaml(str(yaml_file))
+    assert isinstance(config, SampleConfig)
+    assert config.name == "John Doe"
+    assert config.age == 30
+    assert config.is_student is True
 
 
-def test_person_config_from_yaml(
-    tmp_path: Path,
-    sample_yaml_content: str,
-    expected_person_data: dict,
-) -> None:
-    yaml_file = tmp_path / "person-config.yaml"
-    yaml_file.write_text(sample_yaml_content)
-    config = PersonConfig.from_yaml(str(yaml_file))
-    assert isinstance(config, PersonConfig)
-    assert config.name == expected_person_data["name"]
-    assert config.age == expected_person_data["age"]
-    assert config.is_student is expected_person_data["is_student"]
-    assert isinstance(config.input_filepath, Path)
-    assert config.input_filepath.name == expected_person_data["input_filepath_name"]
-    assert config.nested.key == expected_person_data["nested"]["key"]
-    assert config.nested.another_key == expected_person_data["nested"]["another_key"]
-
-
-@pytest.mark.parametrize("bad_path", ["nonexistent.yaml", "./notfound.yaml"])
-def test_file_not_found(bad_path: str) -> None:
+def test_yaml_loader_mixin_file_not_found() -> None:
+    """Test YamlLoaderMixin.from_yaml() with non-existent file."""
     with pytest.raises(FileNotFoundError):
-        PersonConfig.from_yaml(bad_path)
+        SampleConfig.from_yaml("nonexistent.yaml")
+
+
+class SamplePathConfig(PathResolverMixin):
+    """Sample configuration class for PathResolverMixin."""
+
+    input_file: Path
+    output_dir: Path
+    name: str
+
+
+def test_path_resolver_mixin_converts_paths() -> None:
+    """Test PathResolverMixin converts string paths to Path objects."""
+    # The validator will convert strings to Path objects
+    config = SamplePathConfig(
+        input_file="~/test/input.txt",  # type: ignore
+        output_dir="./output",  # type: ignore
+        name="Test Config",
+    )
+
+    assert isinstance(config.input_file, Path)
+    assert isinstance(config.output_dir, Path)
+    assert config.input_file.is_absolute()
+    assert config.output_dir.is_absolute()
+    assert config.name == "Test Config"
+
+
+def test_path_resolver_mixin_handles_none_paths() -> None:
+    """Test PathResolverMixin handles None values properly."""
+
+    class SampleOptionalPathConfig(PathResolverMixin):
+        optional_path: Path | None
+        name: str
+
+    data = {
+        "optional_path": None,
+        "name": "Test Config",
+    }
+
+    config = SampleOptionalPathConfig(**data)
+    assert config.optional_path is None
+    assert config.name == "Test Config"
