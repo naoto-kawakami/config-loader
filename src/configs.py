@@ -75,5 +75,3 @@ class ConfigMixin(YamlLoaderMixin, PathResolverMixin):
     """Base configuration model that combines YAML loading and path resolution."""
 
     pass
-
-
