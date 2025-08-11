@@ -57,6 +57,7 @@ uv sync --group dev
 ```
 config-loader/
 ├── .python-version
+├── CLAUDE.md
 ├── config-loader.code-workspace
 ├── pyproject.toml
 ├── README.md
@@ -64,8 +65,10 @@ config-loader/
 ├── config/
 │   └── person-config.yaml
 ├── src/
+│   ├── __init__.py
 │   ├── configs.py
 │   └── main.py
+├── tests/
 ```
 
 ## License
