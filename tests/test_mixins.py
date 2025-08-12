@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from src.configs import YamlLoaderMixin, PathResolverMixin
+from src.mixins import YamlLoaderMixin, PathResolverMixin
 
 
 class SampleConfig(YamlLoaderMixin):

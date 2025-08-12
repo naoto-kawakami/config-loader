@@ -3,7 +3,7 @@
 from pathlib import Path
 from pprint import pprint
 
-from configs import ConfigMixin
+from mixins import ConfigMixin
 
 
 class PersonConfig(ConfigMixin):

@@ -1,4 +1,4 @@
-from .configs import (
+from .mixins import (
     YamlLoaderMixin,
     PathResolverMixin,
     ConfigMixin,
