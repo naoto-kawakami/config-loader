@@ -1,4 +1,6 @@
-"""Configuration loading module."""
+"""
+This module provides mixins for loading YAML configurations and resolving paths.
+"""
 
 from pathlib import Path
 from typing import Any, get_type_hints

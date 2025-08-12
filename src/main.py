@@ -1,4 +1,6 @@
-"""This script demonstrates how to use the PersonConfig class to load a YAML configuration file."""
+"""
+This script demonstrates how to use the PersonConfig class to load a YAML configuration file.
+"""
 
 from pathlib import Path
 from pprint import pprint
