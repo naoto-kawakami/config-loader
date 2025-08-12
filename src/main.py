@@ -15,8 +15,5 @@ if __name__ == "__main__":
     project_dir = src_dir.parent
     configs_dir = project_dir / "configs"
     config_filepath = configs_dir / "person-config.yaml"
-    if not config_filepath.exists():
-        raise FileNotFoundError(f"Configuration file not found: {config_filepath}")
-
     person_config = PersonConfig.from_yaml(config_filepath)
     pprint(person_config.model_dump())
