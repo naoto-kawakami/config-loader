@@ -67,7 +67,8 @@ config-loader/
 ├── src/
 │   ├── __init__.py
 │   ├── configs.py
-│   └── main.py
+│   ├── main.py
+│   └── mixins.py
 ├── tests/
 ```
 
